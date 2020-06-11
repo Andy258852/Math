@@ -25,7 +25,10 @@ namespace MyMath
         {
             BigInteger aa = BigInteger.Parse(a);
             BigInteger bb = BigInteger.Parse(b);
-            return BigInteger.Divide(BigInteger.Multiply(aa, bb), GetNod(a, b));
+            BigInteger nod = GetNod(a, b);
+            if (nod == 0)
+                return 0;
+            return BigInteger.Divide(BigInteger.Multiply(aa, bb), nod);
         }
     }
 
@@ -59,12 +62,20 @@ namespace MyMath
             return true;
         }
 
-        public static bool CheckLong(string number, ref long value, int max)
+        public static bool CheckLong(string number, ref long value, long max)
         {
-            if (long.TryParse(number, out value))
+            if (!long.TryParse(number, out value))
                 return false;
             else
-                return value <= max;
+                return value <= max && value > 0;
+        }
+
+        public static bool CheckInt(string number, ref int value, int min, int max)
+        {
+            if (!int.TryParse(number, out value))
+                return false;
+            else
+                return value <= max && value >= min;
         }
     }
 
